@@ -18,6 +18,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--source', help='Source directory', required=True)
     parser.add_argument('-d', '--destination', help='Destination directory')
+    parser.add_argument('-r', '--remove', help='Remove original')
     args = parser.parse_args()
 
     destination = args.source if args.destination is None else args.destination
@@ -32,6 +33,10 @@ def main():
         img.close()
 
         logging.info("Finished processing file %s", destination_file)
+
+        if args.remove:
+            os.remove(source_file)
+            logging.info("Removed original file %s", source_file)
 
     logging.info("Finished processing all files")
 
